@@ -15,6 +15,29 @@ Enhancements:
 to avoid false positives or false negatives: one approach would be to use blur to get a sort of moving
 average of the photos over time
 
+main program:
+    //fills photo history queue
+    while number of imgs in photo history queue < IMG_HISTORY_LENGTH:
+        take photo
+        add to queue
+    
+    //main loop
+    while True:
+        take photo
+        compare to queue
+        if difference > MOTION_SENSITIVITY_THRESHOLD:
+            send SMTP notification to SMTP_ADDRESS
+            img_capture_counter = 0
+            while img_capture_counter < IMAGE_CAPTURE_DURATION:
+                save photo, with timestamp in photo name
+                purge oldest photo from queue, deleting from memory
+                add photo to queue
+                take new photo
+                img_capture_counter++
+                sleep IMAGE_CAPTURE_FRAME_RATE
+        else:
+            sleep MOTION_DETECTION_FRAME_RATE
+
 '''
 
 import cv2
@@ -41,6 +64,11 @@ def img_compare_history(history: list,
     norm = hist_avg.mean()
     mse = img_compare(new_img, hist_avg) / norm
     return mse
+
+def img_compare_history_blend(history: list, new_img: np.array):
+    hist_blur = map(lambda img1, img2: skimage.util.compare_images(img1, img2, method='blur'), history)
+    diff = skimage.util.compare_images(hist_blur, new_img, method='diff')
+    return diff
 
 WEBCAM_PATH = '/home/jacob/Pictures/Webcam'
 imgs = sorted([img for img in os.listdir(WEBCAM_PATH) if '.jpg' in img])
@@ -73,19 +101,27 @@ comp2 = skimage.util.compare_images(img1, img3, method=method)
 #show_image(img2)
 #show_image(img3)
 
-show_image(comp1)
-show_image(comp2)
-
-print(comp1.mean())
-print(comp2.mean())
-
-cv2.imwrite("comp1.jpg", comp1 * 255)
-cv2.imwrite("comp2.jpg", comp1 * 255)
-
-#method='blend'
-#comp1 = skimage.util.compare_images(img1, img2, method=method)
-#comp2 = skimage.util.compare_images(img1, img3, method=method)
 #show_image(comp1)
+#show_image(comp2)
+
+
+print('diff of img1 and img 2')
+print(comp1.mean())
+print('\ndiff of img1 and img 3')
+print(comp2.mean())
+print(comp1.max())
+print(comp2.max())
+
+#cv2.imwrite("comp1.jpg", comp1 * 255)
+#cv2.imwrite("comp2.jpg", comp1 * 255)
+
+method='blend'
+comp1 = skimage.util.compare_images(img1, img2, method=method)
+comp2 = skimage.util.compare_images(img1, img3, method=method)
+
+#print('blend of img1 and img2')
+#show_image(comp1)
+#print('\nblend of img1 and img3')
 #show_image(comp2)
 #import pdb; pdb.set_trace()
 
