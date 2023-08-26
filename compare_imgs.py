@@ -12,7 +12,8 @@ Alternative algorithm for checking for movement:
 
 Enhancements:
 - denoising the diff: there will be some differences from shadows, etc. 
-To avoid false positives or false negatives
+to avoid false positives or false negatives: one approach would be to use blur to get a sort of moving
+average of the photos over time
 
 '''
 
@@ -72,18 +73,21 @@ comp2 = skimage.util.compare_images(img1, img3, method=method)
 #show_image(img2)
 #show_image(img3)
 
-#show_image(comp1)
-#show_image(comp2)
+show_image(comp1)
+show_image(comp2)
 
 print(comp1.mean())
 print(comp2.mean())
 
-method='blend'
-comp1 = skimage.util.compare_images(img1, img2, method=method)
-comp2 = skimage.util.compare_images(img1, img3, method=method)
-show_image(comp1)
-show_image(comp2)
+cv2.imwrite("comp1.jpg", comp1 * 255)
+cv2.imwrite("comp2.jpg", comp1 * 255)
 
+#method='blend'
+#comp1 = skimage.util.compare_images(img1, img2, method=method)
+#comp2 = skimage.util.compare_images(img1, img3, method=method)
+#show_image(comp1)
+#show_image(comp2)
+#import pdb; pdb.set_trace()
 
 
 #import pdb; pdb.set_trace()
