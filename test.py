@@ -38,6 +38,9 @@ main program:
         else:
             sleep MOTION_DETECTION_FRAME_RATE
 
+Additional issues:
+- logging (for saving photos, purging history, and logging errors)
+
 '''
 
 import cv2

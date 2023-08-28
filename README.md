@@ -26,11 +26,11 @@ Installation Steps:
 - set up SMTP for sending notification of captured movement
 - configure settings: 
     - MOTION_SENSITIVITY_THRESHOLD: (may vary due to placing, lighting, etc.)
-    - IMG_STORAGE_DURATION (delete stored pictures over X days old)
+    - IMG_STORAGE_DURATION_DAYS (delete stored pictures over X days old)
     - IMG_HISTORY_LENGTH: how many of previous photos should be compared against newest photo?
-    - MOTION_DETECTION_FRAME_RATE: how many pictures should be taken each second?
-    - IMG_CAPTURE_FRAME_RATE: how many pictures per second after motion is detected?
-    - IMG_CAPTURE_DURATION: for how many seconds after motion is detected should images be captured?
+    - MOTION_DETECTION_FPS: how many pictures should be taken each second?
+    - IMG_CAPTURE_FPS: how many pictures per second after motion is detected?
+    - IMG_CAPTURE_DURATION_SECONDS: for how many seconds after motion is detected should images be captured?
     - SMTP_ADDRESS: address to send SMTP to, for notifications of motion detected
 - how do you remote turn on/off the main script?
     - send SMTP to the device?, have cron jobs that periodically checks for new SMTP messages. If a STOP message comes in, kill the python process. If a START message comes in and the python process isn't running, start the python process
