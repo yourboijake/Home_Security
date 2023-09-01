@@ -22,7 +22,7 @@ while (iq.queue_size() - 1) < config['IMG_HISTORY_LENGTH']:
 while True:
     return_value, new_img = cam.read()
     diff = utils.img_compare_last(iq.imgs[-1], new_img)
-    if diff.sum() > config['MOTION_SENSITIVITY_THRESHOLD']:
+    if diff.mean() > config['MOTION_SENSITIVITY_THRESHOLD']:
         #send SMTP notification here
         img_capture_counter = 0
         while img_capture_counter < config['IMG_CAPTURE_NUM_IMGS']:

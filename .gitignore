@@ -8,3 +8,5 @@ share
 pyvenv.cfg
 *.jpg
 *.png
+test.ipynb
+__pycache__
