@@ -10,3 +10,4 @@ pyvenv.cfg
 *.png
 test.ipynb
 __pycache__
+k.txt
