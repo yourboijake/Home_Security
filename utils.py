@@ -4,16 +4,19 @@ import time
 from datetime import datetime
 
 #displays image until a key is pressed
-def show_image(np_array, sleep_time=5):
+def show_image(np_array, sleep_time=5) -> None:
 	cv2.imshow("test", np_array)
 	time.sleep(sleep_time)
 	cv2.destroyAllWindows()
 
-def img_compare_last(last_img: np.array, new_img: np.array):
-	last_img = last_img.mean(axis=2).astype('float64') / 255
-	new_img = new_img.mean(axis=2).astype('float64') / 255
-	comp = np.abs(last_img - new_img)
-	return comp
+def take_image(camera) -> np.array:
+	ret, img = camera.read()
+	img = img.mean(axis=2) #convert b&w
+	img = img.astype('float64') / 255 #scale 0 - 1
+	return img
+
+def img_compare_last(last_img: np.array, new_img: np.array) -> np.array:
+	return np.abs(last_img - new_img)
 
 def save_img(img: np.array):
 	img_name = datetime.now().strftime("date_%Y_%m_%d_time_%H_%M_%S_%f") + '.jpg'
