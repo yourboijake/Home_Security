@@ -34,4 +34,5 @@ Installation Steps:
     - SMTP_ADDRESS: address to send SMTP to, for notifications of motion detected
 - how do you remote turn on/off the main script?
     - send SMTP to the device?, have cron jobs that periodically checks for new SMTP messages. If a STOP message comes in, kill the python process. If a START message comes in and the python process isn't running, start the python process
+	- use SSH from mobile: get SSH client on my phone, and SSH into the Pi, executing the python script
 - streaming to a phone?

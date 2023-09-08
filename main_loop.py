@@ -24,13 +24,9 @@ while True:
 		#send SMTP notification here
 		os.system('clear')
 		print('motion detected:', diff.mean())
-		'''img_capture_counter = 0
-		while img_capture_counter < config['IMG_CAPTURE_NUM_IMGS']:
-			utils.save_img(new_img)
-			iq.dequeue() #purge oldest image from queue
-			iq.enqueue(new_img) #add newest image to queue
-			return_value, new_img = cam.read()
-			img_capture_counter += 1
-			time.sleep(1 / config['IMG_CAPTURE_FPS'])'''
-	
+		img_capture_counter = config['IMG_CAPTURE_NUM_IMGS']
+	if img_capture_counter > 0:
+		utils.save_img(new_img)
+		img_capture_counter -= 1
+
 	time.sleep(1 / config['MOTION_DETECTION_FPS'])

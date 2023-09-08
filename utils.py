@@ -18,9 +18,9 @@ def take_image(camera) -> np.array:
 def img_compare_last(last_img: np.array, new_img: np.array) -> np.array:
 	return np.abs(last_img - new_img)
 
-def save_img(img: np.array):
+def save_img(img: np.array, folder=''):
 	img_name = datetime.now().strftime("date_%Y_%m_%d_time_%H_%M_%S_%f") + '.jpg'
-	cv2.imwrite(img_name, img * 255)
+	cv2.imwrite(folder + img_name, img * 255)
 	
 #implementation of a queue class for images
 class ImgQueue:
