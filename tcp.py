@@ -1,8 +1,7 @@
 import socket
+import json
 
-
-#TCP_IP = '127.0.0.1'
-TCP_IP = '18.221.231.46'
+TCP_IP = json.load(open('ec2.json', 'r'))['ip']
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 MESSAGE = bytes("Hello, World!", 'utf-8')
