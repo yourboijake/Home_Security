@@ -1,13 +1,2 @@
-bin
-take_image.py
-images
-include
-lib
-lib64
-share
-pyvenv.cfg
-*.jpg
-*.png
-test.ipynb
-__pycache__
-k.txt
+/camera/ec2.json
+/server/emails.txt
