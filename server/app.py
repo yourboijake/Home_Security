@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 import threading
 import os
 import json
-from validate_cred import validate_user
 
 MAX_QUEUE_SIZE = 100
 FRAMERATE = 2  #frames per second

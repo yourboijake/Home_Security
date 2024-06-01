@@ -18,8 +18,9 @@ Dev TODO:
 
 
 Testing TODO:
-- set up camera script to capture video and scp to server
 - running Flask app on server
 
+
 Finished Testing:
+- set up camera script to capture video and scp to server
  

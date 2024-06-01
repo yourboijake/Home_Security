@@ -1,12 +1,17 @@
-import json
 import cv2
-import os
 import subprocess
+from datetime import datetime
+
 
 #capture image, returning image name
-def capture_image(cv2_camera) -> str:
+#use_ts parameter is used to tell the image capture to record the timestamp associated with the image
+def capture_image(cv2_camera, use_ts=False) -> str:
     ret, frame = cv2_camera.read()
-    img_fname = 'display_img.jpg'
+    if use_ts:
+        ts = datetime.now().strftime('%m%D%Y%H%M%S%f')
+        img_fname = f'display_img_{ts}.jpg'
+    else:
+        img_fname = f'display_img.jpg'
     cv2.imwrite(img_fname, frame)
 
     return img_fname

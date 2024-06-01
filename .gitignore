@@ -10,4 +10,3 @@ server/emails.txt
 server/cred.json
 server/*.jpg
 server/__pycache__/
-server/static/display_img.jpg

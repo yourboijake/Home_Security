@@ -22,7 +22,7 @@ scp_cred = json.load(open('scp_cred.json'))
 
 #camera setup and settings
 cv2_camera = cv2.VideoCapture(0)
-FRAMERATE = 2  #frames per second
+FRAMERATE = 0.5  #frames per second
 STREAM_TOGGLE = False #send frames or not, boolean
 
 start_ts = datetime.now()
@@ -31,7 +31,7 @@ while True:
 
     if STREAM_TOGGLE == True:
         img_fname = capture_image(cv2_camera=cv2_camera)
-        process = send_image(img_fname=img_fname)
+        process = send_image(img_fname=img_fname, scp_cred=scp_cred)
         if process.returncode != 0:
             open('err.log', 'a').write(process.stderr)
             logging.warning('Failed to scp file to remote server')
