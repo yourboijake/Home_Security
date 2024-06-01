@@ -24,11 +24,9 @@ def img_snap():
         cv2.imwrite(fname, frame)
 
 
-signin_success = False
-failure_msg = ''
 @app.route('/', methods= ["GET", "POST"])
 def home():
-    if request.method == "POST" and signin_success:
+    if request.method == "POST":
         email_switch = request.form.get("email_switch")
         print(type(email_switch))
 
@@ -42,25 +40,15 @@ def home():
 
         with open('emails.txt', 'a') as f:
             f.write(request.form.get("email"))
-    elif request.method == "POST" and signin_success == False:
-        #attempt to validate credentials using validate_user function
-        email = request.form.get('email_signin')
-        pw = request.form.get('password')
-        signin_success = validate_user(email, pw)
-        if signin_success == False: failure_msg = 'Incorrect credentials'
     
     #if signin is a success, render the main page with video stream and settings
-    if signin_success:
-        #retrieve settings values
-        with open('settings.json', 'r') as f:
-            data = json.load(f)
-            email_switch = data['email_switch']
-            capture_switch = data['capture_switch']
+    #retrieve settings values
+    with open('settings.json', 'r') as f:
+        data = json.load(f)
+        email_switch = data['email_switch']
+        capture_switch = data['capture_switch']
 
-        return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch)
-    #if signin is not a success (set to False by default), render the password login page
-    else:
-        return render_template('pw.html', failure_msg=failure_msg)
+    return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch)
 
 
 if __name__ == '__main__':
