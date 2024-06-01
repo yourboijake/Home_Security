@@ -11,7 +11,12 @@
     <body>
         <h1>Home Security Camera</h1>
         <div id="main_panel">
+            {% if stream_toggle == "on" %}
             <img id='image' src="{{ url_for('static', filename='display_img.jpg') }}">
+            {% else %}
+            <p id="image_placeholder">Image Stream Currently Turned Off</p>
+            {% endif %}
+
             <h3>Settings</h3>
             <br>
             <form action="/", method="POST">
@@ -27,6 +32,13 @@
                 <input type="checkbox" id="capture_switch" name="capture_switch" checked>
                 {% else %}
                 <input type="checkbox" id="capture_switch" name="capture_switch">
+                {% endif %}
+                <br>
+                <label for="stream_toggle">Turn stream on/off</label>
+                {% if stream_toggle == "on" %}
+                <input type="checkbox" id="stream_toggle" name="stream_toggle" checked>
+                {% else %}
+                <input type="checkbox" id="stream_toggle" name="stream_toggle">
                 {% endif %}
                 <br>
                 <label for="email">Add email to notification list:</label>
