@@ -1,5 +1,12 @@
+*.jpg
+
 /camera/scp_cred.json
 /camera/api_cred.json
+/camera/*.jpg
+/camera/__pycache__/
+/camera/err.log
+
 /server/emails.txt
 /server/cred.json
+/server/*.jpg
 /server/__pycache__/
