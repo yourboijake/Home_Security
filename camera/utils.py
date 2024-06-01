@@ -1,6 +1,8 @@
 import cv2
 import subprocess
 from datetime import datetime
+import requests
+import json
 
 
 #capture image, returning image name
@@ -23,5 +25,6 @@ def send_image(img_fname, scp_cred) -> subprocess.CompletedProcess:
     return process
 
 #function that accesses REST API on server to identify whether it should be streaming or not 
-def toggle_scp(keypath, api_cred):
-    pass
+def toggle_scp(api_cred) -> dict:
+    res = requests.get(api_cred['api_path'])
+    return res.json()
