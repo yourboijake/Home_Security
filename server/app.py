@@ -17,6 +17,7 @@ def home():
             data = {}
             data['email_switch'] = request.form.get("email_switch")
             data['capture_switch'] = request.form.get("capture_switch")
+            data['stream_toggle'] = request.form.get("stream_toggle")
             new_json = json.dumps(data, indent=4)
             f.write(new_json)
 
@@ -28,8 +29,9 @@ def home():
         data = json.load(f)
         email_switch = data['email_switch']
         capture_switch = data['capture_switch']
+        stream_toggle = data['stream_toggle']
 
-    return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch)
+    return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch, stream_toggle=stream_toggle)
 
 @app.route('/togglestatus')
 def toggle_api():
