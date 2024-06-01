@@ -10,19 +10,6 @@ MAX_QUEUE_SIZE = 100
 FRAMERATE = 2  #frames per second
 app = Flask(__name__)
 
-#define image capture thread
-cam = cv2.VideoCapture(0)
-def img_snap():
-    while True:
-        time.sleep(1.0 / FRAMERATE)
-        #capture and save new frame
-        success, frame = cam.read()
-        ts = datetime.now().strftime('%m-%d-%Y_%H-%M-%S-%f')
-        #fname = 'static/' + ts + '.jpg'
-        fname = 'static/display_img.jpg'
-        cv2.imwrite(fname, frame)
-
-
 @app.route('/', methods= ["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -51,12 +38,4 @@ def home():
 
 
 if __name__ == '__main__':
-    #clear out any existing images
-    #os.system('rm static/05-*.jpg')
-
-    #initialize queue, and thread to take snapshots and populate queue
-    t = threading.Thread(target=img_snap, args=())
-    t.start()
-    time.sleep(1)
-
-    app.run(host='0.0.0.0', port=5000, threaded=True, debug=True)
+    app.run(host='0.0.0.0')
