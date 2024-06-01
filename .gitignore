@@ -1,2 +1,5 @@
-/camera/ec2.json
+/camera/scp_cred.json
+/camera/api_cred.json
 /server/emails.txt
+/server/cred.json
+/server/__pycache__/
