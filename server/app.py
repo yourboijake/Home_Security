@@ -1,9 +1,5 @@
 from flask import Flask, Response, render_template, request
-import cv2
-import time
 from datetime import datetime, timedelta
-import threading
-import os
 import json
 
 MAX_QUEUE_SIZE = 100
@@ -27,7 +23,6 @@ def home():
         with open('emails.txt', 'a') as f:
             f.write(request.form.get("email"))
     
-    #if signin is a success, render the main page with video stream and settings
     #retrieve settings values
     with open('settings.json', 'r') as f:
         data = json.load(f)
@@ -36,6 +31,10 @@ def home():
 
     return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch)
 
+@app.route('/togglestatus')
+def toggle_api():
+    stream_toggle = json.load(open('settings.json', 'r'))['stream_toggle']
+    return {"stream_toggle" : stream_toggle}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

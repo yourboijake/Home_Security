@@ -1,5 +1,4 @@
 from utils import capture_image, send_image, toggle_scp
-import os
 import time
 from datetime import datetime
 import json
@@ -22,12 +21,20 @@ scp_cred = json.load(open('scp_cred.json'))
 
 #camera setup and settings
 cv2_camera = cv2.VideoCapture(0)
-FRAMERATE = 0.5  #frames per second
-STREAM_TOGGLE = False #send frames or not, boolean
+FRAMERATE = 2  #frames per second
+STREAM_TOGGLE = True #send frames or not, boolean
+REFRESH_TOGGLE_INTERVAL = 30 #seconds
 
-start_ts = datetime.now()
+last_api_ts = datetime.now()
 while True:
-    #define API call logic here
+    if (datetime.now() - last_api_ts).seconds > REFRESH_TOGGLE_INTERVAL:
+        try:
+            api_res = toggle_scp(api_cred=api_cred)
+            STREAM_TOGGLE = api_res.json()['stream_toggle']
+            last_api_ts = datetime.now()
+        except:
+            open('err.log', 'a').write(api_res.text)
+            logging.warning('Failed fetch data from stream toggle API')        
 
     if STREAM_TOGGLE == True:
         img_fname = capture_image(cv2_camera=cv2_camera)
