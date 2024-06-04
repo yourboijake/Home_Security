@@ -32,11 +32,12 @@ while True:
             api_res = toggle_scp(api_cred=api_cred)
             STREAM_TOGGLE = api_res.json()['stream_toggle']
             last_api_ts = datetime.now()
+            print('checked stream toggle, result: ', STREAM_TOGGLE)
         except:
             open('err.log', 'a').write(api_res.text)
             logging.warning('Failed fetch data from stream toggle API')        
 
-    if STREAM_TOGGLE == True:
+    if STREAM_TOGGLE == 'on':
         img_fname = capture_image(cv2_camera=cv2_camera)
         process = send_image(img_fname=img_fname, scp_cred=scp_cred)
         if process.returncode != 0:
