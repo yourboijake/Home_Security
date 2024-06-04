@@ -6,6 +6,11 @@ MAX_QUEUE_SIZE = 100
 FRAMERATE = 2  #frames per second
 app = Flask(__name__)
 
+#implement user verification for toggle API
+
+#implement user verification for main page
+
+
 @app.route('/', methods= ["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -35,8 +40,15 @@ def home():
 
 @app.route('/togglestatus')
 def toggle_api():
-    stream_toggle = json.load(open('settings.json', 'r'))['stream_toggle']
-    return {"stream_toggle" : stream_toggle}
+    user_cred = request.authorization.parameters
+    cred = json.loads(open('cred.json', 'r').read())
+    print(user_cred)
+    print(cred)
+    if cred.get(user_cred['username']) == user_cred['password']:
+        stream_toggle = json.load(open('settings.json', 'r'))['stream_toggle']
+        return {"stream_toggle" : stream_toggle}
+    return '<h2>Authentication Failed</h2>', 401
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')

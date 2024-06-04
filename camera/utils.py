@@ -26,5 +26,7 @@ def send_image(img_fname, scp_cred) -> subprocess.CompletedProcess:
 
 #function that accesses REST API on server to identify whether it should be streaming or not 
 def toggle_scp(api_cred) -> dict:
-    res = requests.get(api_cred['api_path'])
-    return res.json()
+    session = requests.Session()
+    session.auth = (api_cred['user'], api_cred['password'])
+    res = session.get(api_cred['api_path'])
+    return res
