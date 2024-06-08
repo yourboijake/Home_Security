@@ -3,6 +3,7 @@ from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import json
+from skimage.metrics import mean_squared_error
 
 MAX_QUEUE_SIZE = 100
 FRAMERATE = 2  #frames per second
@@ -42,6 +43,7 @@ def home():
         email_switch = data['email_switch']
         capture_switch = data['capture_switch']
         stream_toggle = data['stream_toggle']
+
 
     return render_template('index.html', email_switch=email_switch, capture_switch=capture_switch, stream_toggle=stream_toggle)
 

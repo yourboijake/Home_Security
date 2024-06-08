@@ -1,5 +1,6 @@
 {
     "email_switch": null,
     "capture_switch": null,
-    "stream_toggle": null
+    "stream_toggle": null,
+    "motion_detection_threshold": 131.55474283854167
 }
