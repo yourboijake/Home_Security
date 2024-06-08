@@ -1,17 +1,24 @@
 from flask import Flask, Response, render_template, request
+from flask_httpauth import HTTPBasicAuth
+from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime, timedelta
 import json
 
 MAX_QUEUE_SIZE = 100
 FRAMERATE = 2  #frames per second
 app = Flask(__name__)
-
-#implement user verification for toggle API
+auth = HTTPBasicAuth()
 
 #implement user verification for main page
+@auth.verify_password
+def verify_password(username, password):
+    cred = json.loads(open('cred.json', 'r').read())
+    if username in cred and cred.get(username) == password:
+        return username
 
 
 @app.route('/', methods= ["GET", "POST"])
+@auth.login_required
 def home():
     if request.method == "POST":
         email_switch = request.form.get("email_switch")
@@ -48,7 +55,6 @@ def toggle_api():
         stream_toggle = json.load(open('settings.json', 'r'))['stream_toggle']
         return {"stream_toggle" : stream_toggle}
     return '<h2>Authentication Failed</h2>', 401
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
